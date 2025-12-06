@@ -1,0 +1,97 @@
+/*
+ * Tailwind CSS v4 Theme - NO tailwind.config.js needed!
+ * Configuration is done directly in CSS using @theme directive
+ */
+
+@import "tailwindcss";
+
+/*
+ * @theme directive replaces tailwind.config.js theme.extend
+ * Use CSS variables with specific namespaces:
+ * --color-* for colors
+ * --font-* for fonts
+ * --spacing-* for spacing (optional, defaults work great)
+ * --radius-* for border radius
+ * --breakpoint-* for custom breakpoints
+ */
+@theme {
+  /* Colors - Using oklch for wider color gamut (Tailwind v4 default) */
+  --color-border: oklch(0.89 0.006 286);
+  --color-input: oklch(0.89 0.006 286);
+  --color-ring: oklch(0.2 0.015 286);
+
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.15 0.015 286);
+
+  --color-primary: oklch(0.35 0.07 286);
+  --color-primary-foreground: oklch(0.98 0.002 286);
+
+  --color-secondary: oklch(0.96 0.005 286);
+  --color-secondary-foreground: oklch(0.35 0.07 286);
+
+  --color-destructive: oklch(0.58 0.22 25);
+  --color-destructive-foreground: oklch(0.98 0.002 286);
+
+  --color-muted: oklch(0.96 0.005 286);
+  --color-muted-foreground: oklch(0.55 0.015 286);
+
+  --color-accent: oklch(0.96 0.005 286);
+  --color-accent-foreground: oklch(0.35 0.07 286);
+
+  /* Border Radius - Generates utilities like rounded-lg, rounded-md */
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;  /* default */
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+
+  /* Typography - Generates font-sans, font-mono utilities */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Custom breakpoints (optional) */
+  /* --breakpoint-3xl: 1920px; */
+}
+
+/* Dark mode - Automatic with @media or .dark class */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-background: oklch(0.15 0.015 286);
+    --color-foreground: oklch(0.98 0.002 286);
+
+    --color-primary: oklch(0.98 0.002 286);
+    --color-primary-foreground: oklch(0.35 0.07 286);
+
+    --color-secondary: oklch(0.25 0.015 286);
+    --color-secondary-foreground: oklch(0.98 0.002 286);
+
+    --color-muted: oklch(0.25 0.015 286);
+    --color-muted-foreground: oklch(0.65 0.015 286);
+
+    --color-accent: oklch(0.25 0.015 286);
+    --color-accent-foreground: oklch(0.98 0.002 286);
+
+    --color-border: oklch(0.25 0.015 286);
+    --color-input: oklch(0.25 0.015 286);
+    --color-ring: oklch(0.85 0.01 286);
+  }
+}
+
+/* Base styles */
+@layer base {
+  * {
+    border-color: theme(colors.border);
+  }
+
+  body {
+    background-color: theme(colors.background);
+    color: theme(colors.foreground);
+    font-family: theme(fontFamily.sans);
+  }
+}
+
+/* Custom utilities (optional) */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
