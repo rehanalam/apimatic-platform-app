@@ -7,3 +7,425 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ==================== ENUMS ====================
+
+enum OnboardingStatus {
+  not_started
+  in_progress
+  completed
+  skipped
+}
+
+enum UserIntent {
+  sdks_and_portal
+  sdks_only
+}
+
+enum RunTrigger {
+  manual // MVP only
+}
+
+enum RunType {
+  api_spec_change
+  docs_change
+  sdk_settings
+  portal_settings
+  full_rebuild
+}
+
+enum RunStatus {
+  queued
+  building
+  awaiting_approval
+  approved
+  publishing
+  completed
+  failed
+  cancelled
+  disabled
+}
+
+enum EnvironmentType {
+  production
+  preview
+}
+
+enum StageStatus {
+  pending
+  in_progress
+  completed
+  failed
+  skipped
+  cancelled
+}
+
+enum JobType {
+  validation
+  sdk_generation
+  portal_generation
+  version_calculation
+  git_push
+  pr_creation
+  registry_publish
+  portal_deploy
+}
+
+enum ProjectStatus {
+  initializing
+  active
+  archived
+  deleted
+}
+
+enum SdkStatus {
+  not_configured
+  configured
+  generated
+  published
+}
+
+enum SecretType {
+  git_token
+  registry_token
+  api_key
+  ssh_key
+  webhook_secret
+}
+
+// ==================== MODELS ====================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  fullName  String?  @map("full_name")
+  avatarUrl String?  @map("avatar_url")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  workspaceMembers WorkspaceMember[]
+
+  @@map("users")
+}
+
+model Workspace {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  members  WorkspaceMember[]
+  projects Project[]
+
+  @@index([slug])
+  @@map("workspaces")
+}
+
+model WorkspaceMember {
+  id          String   @id @default(uuid())
+  workspaceId String   @map("workspace_id")
+  userId      String   @map("user_id")
+  role        String   @default("member") // owner, admin, member
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([workspaceId])
+  @@index([userId])
+  @@map("workspace_members")
+}
+
+model Project {
+  id          String        @id @default(uuid())
+  workspaceId String        @map("workspace_id")
+  name        String
+  slug        String
+  description String?
+  status      ProjectStatus @default(initializing)
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
+  workspace         Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  onboardingState   OnboardingState?
+  walkthroughStates WalkthroughState[]
+  apiSpecs          ApiSpec[]
+  runs              Run[]
+  sdkConfigs        SdkConfig[]
+  portalConfig      PortalConfig?
+  secrets           Secret[]
+
+  @@unique([workspaceId, slug])
+  @@index([workspaceId])
+  @@index([slug])
+  @@map("projects")
+}
+
+model OnboardingState {
+  id           String            @id @default(uuid())
+  projectId    String            @unique @map("project_id")
+  currentStep  Int               @default(1) @map("current_step")
+  status       OnboardingStatus  @default(not_started)
+  userIntent   UserIntent?       @map("user_intent")
+  hasApiSpec   Boolean           @default(false) @map("has_api_spec")
+  hasSdkConfig Boolean           @default(false) @map("has_sdk_config")
+  hasPortal    Boolean           @default(false) @map("has_portal")
+  completedAt  DateTime?         @map("completed_at")
+  skippedAt    DateTime?         @map("skipped_at")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([status])
+  @@map("onboarding_states")
+}
+
+model WalkthroughState {
+  id             String   @id @default(uuid())
+  projectId      String   @map("project_id")
+  walkthroughKey String   @map("walkthrough_key") // e.g., 'first_run', 'sdk_config', 'portal_setup'
+  completed      Boolean  @default(false)
+  dismissedAt    DateTime? @map("dismissed_at")
+  completedAt    DateTime? @map("completed_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, walkthroughKey])
+  @@index([projectId])
+  @@map("walkthrough_states")
+}
+
+model ApiSpec {
+  id          String   @id @default(uuid())
+  projectId   String   @map("project_id")
+  name        String
+  format      String   // openapi, swagger, raml, etc.
+  version     String   // spec version (e.g., "3.0.0")
+  content     String   // JSON or YAML content
+  fileUrl     String?  @map("file_url") // URL if uploaded
+  isActive    Boolean  @default(true) @map("is_active")
+  uploadedAt  DateTime @default(now()) @map("uploaded_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  project          Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  specHealthScores SpecHealthScore[]
+
+  @@index([projectId])
+  @@index([isActive])
+  @@map("api_specs")
+}
+
+model SpecHealthScore {
+  id              String   @id @default(uuid())
+  apiSpecId       String   @map("api_spec_id")
+  overallScore    Int      @map("overall_score") // 0-100
+  completeness    Int      // 0-100
+  documentation   Int      // 0-100
+  bestPractices   Int      @map("best_practices") // 0-100
+  issues          Json     // Array of issues found
+  recommendations Json     // Array of recommendations
+  calculatedAt    DateTime @default(now()) @map("calculated_at")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  apiSpec ApiSpec @relation(fields: [apiSpecId], references: [id], onDelete: Cascade)
+
+  @@index([apiSpecId])
+  @@map("spec_health_scores")
+}
+
+model Run {
+  id              String      @id @default(uuid())
+  projectId       String      @map("project_id")
+  runNumber       Int         @map("run_number") // Auto-incrementing per project
+  triggerType     RunTrigger  @map("trigger_type")
+  runType         RunType     @map("run_type")
+  status          RunStatus   @default(queued)
+  environment     EnvironmentType @default(production)
+  branch          String?     // Git branch if applicable
+  commitSha       String?     @map("commit_sha")
+  triggeredBy     String?     @map("triggered_by") // User ID
+  changesSummary  Json?       @map("changes_summary") // What changed to trigger this run
+  approvedBy      String?     @map("approved_by") // User ID who approved
+  approvedAt      DateTime?   @map("approved_at")
+  startedAt       DateTime?   @map("started_at")
+  completedAt     DateTime?   @map("completed_at")
+  failedAt        DateTime?   @map("failed_at")
+  cancelledAt     DateTime?   @map("cancelled_at")
+  errorMessage    String?     @map("error_message")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  project Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  stages  RunStage[]
+  events  RunEvent[]
+
+  @@unique([projectId, runNumber])
+  @@index([projectId])
+  @@index([status])
+  @@index([environment])
+  @@map("runs")
+}
+
+model RunStage {
+  id          String      @id @default(uuid())
+  runId       String      @map("run_id")
+  name        String      // e.g., "Validation", "Build", "Publish"
+  order       Int         // Execution order
+  status      StageStatus @default(pending)
+  startedAt   DateTime?   @map("started_at")
+  completedAt DateTime?   @map("completed_at")
+  failedAt    DateTime?   @map("failed_at")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  run  Run       @relation(fields: [runId], references: [id], onDelete: Cascade)
+  jobs RunJob[]
+
+  @@unique([runId, order])
+  @@index([runId])
+  @@map("run_stages")
+}
+
+model RunJob {
+  id          String      @id @default(uuid())
+  stageId     String      @map("stage_id")
+  type        JobType
+  name        String
+  status      StageStatus @default(pending)
+  output      Json?       // Job output/results
+  logs        String?     // Execution logs
+  startedAt   DateTime?   @map("started_at")
+  completedAt DateTime?   @map("completed_at")
+  failedAt    DateTime?   @map("failed_at")
+  errorMessage String?    @map("error_message")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  stage RunStage @relation(fields: [stageId], references: [id], onDelete: Cascade)
+
+  @@index([stageId])
+  @@index([type])
+  @@map("run_jobs")
+}
+
+model RunEvent {
+  id        String   @id @default(uuid())
+  runId     String   @map("run_id")
+  type      String   // e.g., "status_change", "approval_required", "error"
+  message   String
+  metadata  Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  run Run @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId])
+  @@index([type])
+  @@map("run_events")
+}
+
+model SdkConfig {
+  id                String    @id @default(uuid())
+  projectId         String    @map("project_id")
+  language          String    // e.g., "typescript", "python", "java"
+  version           String?   // Current SDK version
+  status            SdkStatus @default(not_configured)
+  repositoryUrl     String?   @map("repository_url")
+  registryUrl       String?   @map("registry_url")
+  packageName       String?   @map("package_name")
+  configuration     Json?     // Language-specific config
+  lastGeneratedAt   DateTime? @map("last_generated_at")
+  lastPublishedAt   DateTime? @map("last_published_at")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  project      Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  artifacts    SdkArtifact[]
+
+  @@unique([projectId, language])
+  @@index([projectId])
+  @@index([status])
+  @@map("sdk_configs")
+}
+
+model SdkArtifact {
+  id          String   @id @default(uuid())
+  sdkConfigId String   @map("sdk_config_id")
+  version     String
+  fileUrl     String   @map("file_url")
+  fileSize    Int      @map("file_size")
+  checksum    String
+  publishedAt DateTime @default(now()) @map("published_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  sdkConfig SdkConfig @relation(fields: [sdkConfigId], references: [id], onDelete: Cascade)
+
+  @@index([sdkConfigId])
+  @@map("sdk_artifacts")
+}
+
+model PortalConfig {
+  id              String   @id @default(uuid())
+  projectId       String   @unique @map("project_id")
+  isEnabled       Boolean  @default(false) @map("is_enabled")
+  subdomain       String?  @unique
+  customDomain    String?  @unique @map("custom_domain")
+  title           String?
+  description     String?
+  logoUrl         String?  @map("logo_url")
+  theme           Json?    // Color scheme, fonts, etc.
+  customContent   Json?    @map("custom_content") // Additional pages, guides
+  configuration   Json?    // Portal-specific settings
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  project     Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  deployments PortalDeployment[]
+
+  @@index([projectId])
+  @@index([subdomain])
+  @@map("portal_configs")
+}
+
+model PortalDeployment {
+  id             String          @id @default(uuid())
+  portalConfigId String          @map("portal_config_id")
+  environment    EnvironmentType
+  version        String
+  deployedUrl    String          @map("deployed_url")
+  deployedAt     DateTime        @default(now()) @map("deployed_at")
+  createdAt      DateTime        @default(now()) @map("created_at")
+
+  portalConfig PortalConfig @relation(fields: [portalConfigId], references: [id], onDelete: Cascade)
+
+  @@index([portalConfigId])
+  @@index([environment])
+  @@map("portal_deployments")
+}
+
+model Secret {
+  id          String     @id @default(uuid())
+  projectId   String     @map("project_id")
+  name        String
+  type        SecretType
+  encryptedValue String  @map("encrypted_value")
+  description String?
+  lastUsedAt  DateTime?  @map("last_used_at")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, name])
+  @@index([projectId])
+  @@index([type])
+  @@map("secrets")
+}
