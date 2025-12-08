@@ -6,92 +6,71 @@
 @import "tailwindcss";
 
 /*
- * @theme directive replaces tailwind.config.js theme.extend
- * Use CSS variables with specific namespaces:
- * --color-* for colors
- * --font-* for fonts
- * --spacing-* for spacing (optional, defaults work great)
- * --radius-* for border radius
- * --breakpoint-* for custom breakpoints
+ * @theme directive replaces tailwind.config.js
+ * Define colors, fonts, spacing, etc. directly in CSS
  */
 @theme {
-  /* Colors - Using oklch for wider color gamut (Tailwind v4 default) */
-  --color-border: oklch(0.89 0.006 286);
-  --color-input: oklch(0.89 0.006 286);
-  --color-ring: oklch(0.2 0.015 286);
+  /* Color palette using HSL format */
+  --color-background: 0 0% 100%;
+  --color-foreground: 240 10% 3.9%;
+  --color-card: 0 0% 100%;
+  --color-card-foreground: 240 10% 3.9%;
+  --color-popover: 0 0% 100%;
+  --color-popover-foreground: 240 10% 3.9%;
+  --color-primary: 240 5.9% 10%;
+  --color-primary-foreground: 0 0% 98%;
+  --color-secondary: 240 4.8% 95.9%;
+  --color-secondary-foreground: 240 5.9% 10%;
+  --color-muted: 240 4.8% 95.9%;
+  --color-muted-foreground: 240 3.8% 46.1%;
+  --color-accent: 240 4.8% 95.9%;
+  --color-accent-foreground: 240 5.9% 10%;
+  --color-destructive: 0 84.2% 60.2%;
+  --color-destructive-foreground: 0 0% 98%;
+  --color-border: 240 5.9% 90%;
+  --color-input: 240 5.9% 90%;
+  --color-ring: 240 5.9% 10%;
 
-  --color-background: oklch(1 0 0);
-  --color-foreground: oklch(0.15 0.015 286);
-
-  --color-primary: oklch(0.35 0.07 286);
-  --color-primary-foreground: oklch(0.98 0.002 286);
-
-  --color-secondary: oklch(0.96 0.005 286);
-  --color-secondary-foreground: oklch(0.35 0.07 286);
-
-  --color-destructive: oklch(0.58 0.22 25);
-  --color-destructive-foreground: oklch(0.98 0.002 286);
-
-  --color-muted: oklch(0.96 0.005 286);
-  --color-muted-foreground: oklch(0.55 0.015 286);
-
-  --color-accent: oklch(0.96 0.005 286);
-  --color-accent-foreground: oklch(0.35 0.07 286);
-
-  /* Border Radius - Generates utilities like rounded-lg, rounded-md */
-  --radius-sm: 0.25rem;
-  --radius: 0.5rem;  /* default */
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-
-  /* Typography - Generates font-sans, font-mono utilities */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  /* Custom breakpoints (optional) */
-  /* --breakpoint-3xl: 1920px; */
+  /* Border radius */
+  --radius-sm: calc(0.5rem - 4px);
+  --radius-md: calc(0.5rem - 2px);
+  --radius-lg: 0.5rem;
+  --radius: 0.5rem;
 }
 
-/* Dark mode - Automatic with @media or .dark class */
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
   @theme {
-    --color-background: oklch(0.15 0.015 286);
-    --color-foreground: oklch(0.98 0.002 286);
-
-    --color-primary: oklch(0.98 0.002 286);
-    --color-primary-foreground: oklch(0.35 0.07 286);
-
-    --color-secondary: oklch(0.25 0.015 286);
-    --color-secondary-foreground: oklch(0.98 0.002 286);
-
-    --color-muted: oklch(0.25 0.015 286);
-    --color-muted-foreground: oklch(0.65 0.015 286);
-
-    --color-accent: oklch(0.25 0.015 286);
-    --color-accent-foreground: oklch(0.98 0.002 286);
-
-    --color-border: oklch(0.25 0.015 286);
-    --color-input: oklch(0.25 0.015 286);
-    --color-ring: oklch(0.85 0.01 286);
+    --color-background: 240 10% 3.9%;
+    --color-foreground: 0 0% 98%;
+    --color-card: 240 10% 3.9%;
+    --color-card-foreground: 0 0% 98%;
+    --color-popover: 240 10% 3.9%;
+    --color-popover-foreground: 0 0% 98%;
+    --color-primary: 0 0% 98%;
+    --color-primary-foreground: 240 5.9% 10%;
+    --color-secondary: 240 3.7% 15.9%;
+    --color-secondary-foreground: 0 0% 98%;
+    --color-muted: 240 3.7% 15.9%;
+    --color-muted-foreground: 240 5% 64.9%;
+    --color-accent: 240 3.7% 15.9%;
+    --color-accent-foreground: 0 0% 98%;
+    --color-destructive: 0 62.8% 30.6%;
+    --color-destructive-foreground: 0 0% 98%;
+    --color-border: 240 3.7% 15.9%;
+    --color-input: 240 3.7% 15.9%;
+    --color-ring: 240 4.9% 83.9%;
   }
 }
 
 /* Base styles */
 @layer base {
   * {
-    border-color: theme(colors.border);
+    border-color: hsl(var(--color-border));
   }
 
   body {
-    background-color: theme(colors.background);
-    color: theme(colors.foreground);
-    font-family: theme(fontFamily.sans);
-  }
-}
-
-/* Custom utilities (optional) */
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+    background-color: hsl(var(--color-background));
+    color: hsl(var(--color-foreground));
   }
 }
