@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./client/auth": "./src/client/auth.ts",
     "./auth": "./src/client/auth.ts",
     "./projects": "./src/server-functions/projects.ts",
     "./runs": "./src/server-functions/runs.ts",
