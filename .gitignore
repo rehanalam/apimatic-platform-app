@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production
+dist/
+build/
+.output/
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+pnpm-debug.log*
+
+# Local env files
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Turbo
+.turbo
+
+# TanStack
+.tanstack/
+
+# Vite
+vite.config.ts.timestamp-*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+
+# Cloudflare
+.wrangler/
+.dev.vars
+wrangler.toml.backup
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# Storybook
+storybook-static/
