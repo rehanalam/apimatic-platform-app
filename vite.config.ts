@@ -6,10 +6,20 @@ import viteTsConfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
 import { cloudflare } from '@cloudflare/vite-plugin'
 
-const config = defineConfig({
+const config = defineConfig(({ mode }) => ({
   plugins: [
     devtools(),
-    cloudflare({ viteEnvironment: { name: 'ssr' } }),
+    // Disable Cloudflare plugin in development since Prisma requires Node.js runtime
+    ...(mode !== 'development'
+      ? [
+          cloudflare({
+            viteEnvironment: { name: 'ssr' },
+            enableRuntimeCompatibilityCheck: false,
+            persist: { path: '.wrangler/state' },
+            compatibilityFlags: ['nodejs_compat'],
+          }),
+        ]
+      : []),
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
@@ -22,6 +32,11 @@ const config = defineConfig({
       },
     }),
   ],
-})
+  resolve: {
+    alias: {
+      '.prisma/client': './src/generated/prisma',
+    },
+  },
+}))
 
 export default config
