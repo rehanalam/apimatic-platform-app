@@ -12,16 +12,16 @@
   },
   "dependencies": {
     "@apimatic/db": "workspace:*",
-    "@tanstack/react-start": "^1.80.1",
+    "@tanstack/react-start": "^1.140.0",
     "bcryptjs": "^2.4.3",
-    "jose": "^5.9.6",
+    "jose": "^5.10.0",
     "vinxi": "^0.5.8",
-    "zod": "^3.23.8"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@apimatic/config": "workspace:*",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^24.10.1",
-    "typescript": "^5.6.3"
+    "typescript": "^5.9.3"
   }
 }
