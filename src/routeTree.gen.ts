@@ -10,23 +10,57 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WorkspacesIndexRouteImport } from './routes/workspaces/index'
+import { Route as WorkspacesCreateRouteImport } from './routes/workspaces/create'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStorybookRouteImport } from './routes/demo/storybook'
 import { Route as DemoPrismaRouteImport } from './routes/demo/prisma'
+import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as WorkspacesWorkspaceIdRouteRouteImport } from './routes/workspaces/$workspaceId/route'
+import { Route as WorkspacesWorkspaceIdIndexRouteImport } from './routes/workspaces/$workspaceId/index'
+import { Route as WorkspacesWorkspaceIdTeamsRouteImport } from './routes/workspaces/$workspaceId/teams'
+import { Route as WorkspacesWorkspaceIdSettingsRouteImport } from './routes/workspaces/$workspaceId/settings'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
 import { Route as DemoFormAddressRouteImport } from './routes/demo/form.address'
 import { Route as DemoApiTqTodosRouteImport } from './routes/demo/api.tq-todos'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
+import { Route as WorkspacesWorkspaceIdProjectsRouteRouteImport } from './routes/workspaces/$workspaceId/projects/route'
+import { Route as WorkspacesWorkspaceIdProjectsIndexRouteImport } from './routes/workspaces/$workspaceId/projects/index'
 import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
+import { Route as WorkspacesWorkspaceIdProjectsCreateRouteImport } from './routes/workspaces/$workspaceId/projects/create'
 import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr.spa-mode'
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdIndexRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/index'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdOnboardingRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/onboarding'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdDashabordRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/dashabord'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/settings/index'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/walkthrough/portal'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/settings/teams'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/settings/project-source'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/settings/git-connection'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/settings/general'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/api-studio/spec'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/api-studio/sdk'
+import { Route as WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRouteImport } from './routes/workspaces/$workspaceId/projects/$projectId/api-studio/portal'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkspacesIndexRoute = WorkspacesIndexRouteImport.update({
+  id: '/workspaces/',
+  path: '/workspaces/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkspacesCreateRoute = WorkspacesCreateRouteImport.update({
+  id: '/workspaces/create',
+  path: '/workspaces/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
@@ -44,6 +78,40 @@ const DemoPrismaRoute = DemoPrismaRouteImport.update({
   path: '/demo/prisma',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/_auth/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/_auth/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkspacesWorkspaceIdRouteRoute =
+  WorkspacesWorkspaceIdRouteRouteImport.update({
+    id: '/workspaces/$workspaceId',
+    path: '/workspaces/$workspaceId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const WorkspacesWorkspaceIdIndexRoute =
+  WorkspacesWorkspaceIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => WorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdTeamsRoute =
+  WorkspacesWorkspaceIdTeamsRouteImport.update({
+    id: '/teams',
+    path: '/teams',
+    getParentRoute: () => WorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdSettingsRoute =
+  WorkspacesWorkspaceIdSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => WorkspacesWorkspaceIdRouteRoute,
+  } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
   id: '/demo/start/server-funcs',
   path: '/demo/start/server-funcs',
@@ -74,11 +142,29 @@ const DemoApiNamesRoute = DemoApiNamesRouteImport.update({
   path: '/demo/api/names',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkspacesWorkspaceIdProjectsRouteRoute =
+  WorkspacesWorkspaceIdProjectsRouteRouteImport.update({
+    id: '/projects',
+    path: '/projects',
+    getParentRoute: () => WorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsIndexRoute =
+  WorkspacesWorkspaceIdProjectsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
 const DemoStartSsrIndexRoute = DemoStartSsrIndexRouteImport.update({
   id: '/demo/start/ssr/',
   path: '/demo/start/ssr/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkspacesWorkspaceIdProjectsCreateRoute =
+  WorkspacesWorkspaceIdProjectsCreateRouteImport.update({
+    id: '/create',
+    path: '/create',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
 const DemoStartSsrSpaModeRoute = DemoStartSsrSpaModeRouteImport.update({
   id: '/demo/start/ssr/spa-mode',
   path: '/demo/start/ssr/spa-mode',
@@ -94,112 +180,339 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
   path: '/demo/start/ssr/data-only',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdIndexRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdIndexRouteImport.update({
+    id: '/$projectId/',
+    path: '/$projectId/',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdOnboardingRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdOnboardingRouteImport.update({
+    id: '/$projectId/onboarding',
+    path: '/$projectId/onboarding',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdDashabordRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdDashabordRouteImport.update({
+    id: '/$projectId/dashabord',
+    path: '/$projectId/dashabord',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRouteImport.update({
+    id: '/$projectId/settings/',
+    path: '/$projectId/settings/',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRouteImport.update({
+    id: '/$projectId/walkthrough/sdk',
+    path: '/$projectId/walkthrough/sdk',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRouteImport.update({
+    id: '/$projectId/walkthrough/portal',
+    path: '/$projectId/walkthrough/portal',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRouteImport.update({
+    id: '/$projectId/settings/teams',
+    path: '/$projectId/settings/teams',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRouteImport.update(
+    {
+      id: '/$projectId/settings/project-source',
+      path: '/$projectId/settings/project-source',
+      getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+    } as any,
+  )
+const WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRouteImport.update(
+    {
+      id: '/$projectId/settings/git-connection',
+      path: '/$projectId/settings/git-connection',
+      getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+    } as any,
+  )
+const WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRouteImport.update({
+    id: '/$projectId/settings/general',
+    path: '/$projectId/settings/general',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRouteImport.update({
+    id: '/$projectId/api-studio/spec',
+    path: '/$projectId/api-studio/spec',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRouteImport.update({
+    id: '/$projectId/api-studio/sdk',
+    path: '/$projectId/api-studio/sdk',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
+const WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRoute =
+  WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRouteImport.update({
+    id: '/$projectId/api-studio/portal',
+    path: '/$projectId/api-studio/portal',
+    getParentRoute: () => WorkspacesWorkspaceIdProjectsRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/workspaces/$workspaceId': typeof WorkspacesWorkspaceIdRouteRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
   '/demo/prisma': typeof DemoPrismaRoute
   '/demo/storybook': typeof DemoStorybookRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/workspaces/create': typeof WorkspacesCreateRoute
+  '/workspaces': typeof WorkspacesIndexRoute
+  '/workspaces/$workspaceId/projects': typeof WorkspacesWorkspaceIdProjectsRouteRouteWithChildren
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/workspaces/$workspaceId/settings': typeof WorkspacesWorkspaceIdSettingsRoute
+  '/workspaces/$workspaceId/teams': typeof WorkspacesWorkspaceIdTeamsRoute
+  '/workspaces/$workspaceId/': typeof WorkspacesWorkspaceIdIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
+  '/workspaces/$workspaceId/projects/create': typeof WorkspacesWorkspaceIdProjectsCreateRoute
   '/demo/start/ssr': typeof DemoStartSsrIndexRoute
+  '/workspaces/$workspaceId/projects/': typeof WorkspacesWorkspaceIdProjectsIndexRoute
+  '/workspaces/$workspaceId/projects/$projectId/dashabord': typeof WorkspacesWorkspaceIdProjectsProjectIdDashabordRoute
+  '/workspaces/$workspaceId/projects/$projectId/onboarding': typeof WorkspacesWorkspaceIdProjectsProjectIdOnboardingRoute
+  '/workspaces/$workspaceId/projects/$projectId': typeof WorkspacesWorkspaceIdProjectsProjectIdIndexRoute
+  '/workspaces/$workspaceId/projects/$projectId/api-studio/portal': typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRoute
+  '/workspaces/$workspaceId/projects/$projectId/api-studio/sdk': typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRoute
+  '/workspaces/$workspaceId/projects/$projectId/api-studio/spec': typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/general': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/git-connection': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/project-source': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/teams': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRoute
+  '/workspaces/$workspaceId/projects/$projectId/walkthrough/portal': typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRoute
+  '/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk': typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
   '/demo/prisma': typeof DemoPrismaRoute
   '/demo/storybook': typeof DemoStorybookRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/workspaces/create': typeof WorkspacesCreateRoute
+  '/workspaces': typeof WorkspacesIndexRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/workspaces/$workspaceId/settings': typeof WorkspacesWorkspaceIdSettingsRoute
+  '/workspaces/$workspaceId/teams': typeof WorkspacesWorkspaceIdTeamsRoute
+  '/workspaces/$workspaceId': typeof WorkspacesWorkspaceIdIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
+  '/workspaces/$workspaceId/projects/create': typeof WorkspacesWorkspaceIdProjectsCreateRoute
   '/demo/start/ssr': typeof DemoStartSsrIndexRoute
+  '/workspaces/$workspaceId/projects': typeof WorkspacesWorkspaceIdProjectsIndexRoute
+  '/workspaces/$workspaceId/projects/$projectId/dashabord': typeof WorkspacesWorkspaceIdProjectsProjectIdDashabordRoute
+  '/workspaces/$workspaceId/projects/$projectId/onboarding': typeof WorkspacesWorkspaceIdProjectsProjectIdOnboardingRoute
+  '/workspaces/$workspaceId/projects/$projectId': typeof WorkspacesWorkspaceIdProjectsProjectIdIndexRoute
+  '/workspaces/$workspaceId/projects/$projectId/api-studio/portal': typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRoute
+  '/workspaces/$workspaceId/projects/$projectId/api-studio/sdk': typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRoute
+  '/workspaces/$workspaceId/projects/$projectId/api-studio/spec': typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/general': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/git-connection': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/project-source': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/teams': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRoute
+  '/workspaces/$workspaceId/projects/$projectId/walkthrough/portal': typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRoute
+  '/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk': typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/workspaces/$workspaceId': typeof WorkspacesWorkspaceIdRouteRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/signup': typeof AuthSignupRoute
   '/demo/prisma': typeof DemoPrismaRoute
   '/demo/storybook': typeof DemoStorybookRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/workspaces/create': typeof WorkspacesCreateRoute
+  '/workspaces/': typeof WorkspacesIndexRoute
+  '/workspaces/$workspaceId/projects': typeof WorkspacesWorkspaceIdProjectsRouteRouteWithChildren
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/workspaces/$workspaceId/settings': typeof WorkspacesWorkspaceIdSettingsRoute
+  '/workspaces/$workspaceId/teams': typeof WorkspacesWorkspaceIdTeamsRoute
+  '/workspaces/$workspaceId/': typeof WorkspacesWorkspaceIdIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
+  '/workspaces/$workspaceId/projects/create': typeof WorkspacesWorkspaceIdProjectsCreateRoute
   '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
+  '/workspaces/$workspaceId/projects/': typeof WorkspacesWorkspaceIdProjectsIndexRoute
+  '/workspaces/$workspaceId/projects/$projectId/dashabord': typeof WorkspacesWorkspaceIdProjectsProjectIdDashabordRoute
+  '/workspaces/$workspaceId/projects/$projectId/onboarding': typeof WorkspacesWorkspaceIdProjectsProjectIdOnboardingRoute
+  '/workspaces/$workspaceId/projects/$projectId/': typeof WorkspacesWorkspaceIdProjectsProjectIdIndexRoute
+  '/workspaces/$workspaceId/projects/$projectId/api-studio/portal': typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRoute
+  '/workspaces/$workspaceId/projects/$projectId/api-studio/sdk': typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRoute
+  '/workspaces/$workspaceId/projects/$projectId/api-studio/spec': typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/general': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/git-connection': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/project-source': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/teams': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRoute
+  '/workspaces/$workspaceId/projects/$projectId/walkthrough/portal': typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRoute
+  '/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk': typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRoute
+  '/workspaces/$workspaceId/projects/$projectId/settings/': typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/workspaces/$workspaceId'
+    | '/login'
+    | '/signup'
     | '/demo/prisma'
     | '/demo/storybook'
     | '/demo/tanstack-query'
+    | '/workspaces/create'
+    | '/workspaces'
+    | '/workspaces/$workspaceId/projects'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/workspaces/$workspaceId/settings'
+    | '/workspaces/$workspaceId/teams'
+    | '/workspaces/$workspaceId/'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
+    | '/workspaces/$workspaceId/projects/create'
     | '/demo/start/ssr'
+    | '/workspaces/$workspaceId/projects/'
+    | '/workspaces/$workspaceId/projects/$projectId/dashabord'
+    | '/workspaces/$workspaceId/projects/$projectId/onboarding'
+    | '/workspaces/$workspaceId/projects/$projectId'
+    | '/workspaces/$workspaceId/projects/$projectId/api-studio/portal'
+    | '/workspaces/$workspaceId/projects/$projectId/api-studio/sdk'
+    | '/workspaces/$workspaceId/projects/$projectId/api-studio/spec'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/general'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/git-connection'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/project-source'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/teams'
+    | '/workspaces/$workspaceId/projects/$projectId/walkthrough/portal'
+    | '/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk'
+    | '/workspaces/$workspaceId/projects/$projectId/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/login'
+    | '/signup'
     | '/demo/prisma'
     | '/demo/storybook'
     | '/demo/tanstack-query'
+    | '/workspaces/create'
+    | '/workspaces'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/workspaces/$workspaceId/settings'
+    | '/workspaces/$workspaceId/teams'
+    | '/workspaces/$workspaceId'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
+    | '/workspaces/$workspaceId/projects/create'
     | '/demo/start/ssr'
+    | '/workspaces/$workspaceId/projects'
+    | '/workspaces/$workspaceId/projects/$projectId/dashabord'
+    | '/workspaces/$workspaceId/projects/$projectId/onboarding'
+    | '/workspaces/$workspaceId/projects/$projectId'
+    | '/workspaces/$workspaceId/projects/$projectId/api-studio/portal'
+    | '/workspaces/$workspaceId/projects/$projectId/api-studio/sdk'
+    | '/workspaces/$workspaceId/projects/$projectId/api-studio/spec'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/general'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/git-connection'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/project-source'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/teams'
+    | '/workspaces/$workspaceId/projects/$projectId/walkthrough/portal'
+    | '/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk'
+    | '/workspaces/$workspaceId/projects/$projectId/settings'
   id:
     | '__root__'
     | '/'
+    | '/workspaces/$workspaceId'
+    | '/_auth/login'
+    | '/_auth/signup'
     | '/demo/prisma'
     | '/demo/storybook'
     | '/demo/tanstack-query'
+    | '/workspaces/create'
+    | '/workspaces/'
+    | '/workspaces/$workspaceId/projects'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/workspaces/$workspaceId/settings'
+    | '/workspaces/$workspaceId/teams'
+    | '/workspaces/$workspaceId/'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
+    | '/workspaces/$workspaceId/projects/create'
     | '/demo/start/ssr/'
+    | '/workspaces/$workspaceId/projects/'
+    | '/workspaces/$workspaceId/projects/$projectId/dashabord'
+    | '/workspaces/$workspaceId/projects/$projectId/onboarding'
+    | '/workspaces/$workspaceId/projects/$projectId/'
+    | '/workspaces/$workspaceId/projects/$projectId/api-studio/portal'
+    | '/workspaces/$workspaceId/projects/$projectId/api-studio/sdk'
+    | '/workspaces/$workspaceId/projects/$projectId/api-studio/spec'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/general'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/git-connection'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/project-source'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/teams'
+    | '/workspaces/$workspaceId/projects/$projectId/walkthrough/portal'
+    | '/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk'
+    | '/workspaces/$workspaceId/projects/$projectId/settings/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  WorkspacesWorkspaceIdRouteRoute: typeof WorkspacesWorkspaceIdRouteRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
   DemoPrismaRoute: typeof DemoPrismaRoute
   DemoStorybookRoute: typeof DemoStorybookRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  WorkspacesCreateRoute: typeof WorkspacesCreateRoute
+  WorkspacesIndexRoute: typeof WorkspacesIndexRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoApiTqTodosRoute: typeof DemoApiTqTodosRoute
   DemoFormAddressRoute: typeof DemoFormAddressRoute
@@ -219,6 +532,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workspaces/': {
+      id: '/workspaces/'
+      path: '/workspaces'
+      fullPath: '/workspaces'
+      preLoaderRoute: typeof WorkspacesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workspaces/create': {
+      id: '/workspaces/create'
+      path: '/workspaces/create'
+      fullPath: '/workspaces/create'
+      preLoaderRoute: typeof WorkspacesCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/tanstack-query': {
@@ -241,6 +568,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/demo/prisma'
       preLoaderRoute: typeof DemoPrismaRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_auth/signup': {
+      id: '/_auth/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workspaces/$workspaceId': {
+      id: '/workspaces/$workspaceId'
+      path: '/workspaces/$workspaceId'
+      fullPath: '/workspaces/$workspaceId'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workspaces/$workspaceId/': {
+      id: '/workspaces/$workspaceId/'
+      path: '/'
+      fullPath: '/workspaces/$workspaceId/'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdIndexRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdRouteRoute
+    }
+    '/workspaces/$workspaceId/teams': {
+      id: '/workspaces/$workspaceId/teams'
+      path: '/teams'
+      fullPath: '/workspaces/$workspaceId/teams'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdTeamsRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdRouteRoute
+    }
+    '/workspaces/$workspaceId/settings': {
+      id: '/workspaces/$workspaceId/settings'
+      path: '/settings'
+      fullPath: '/workspaces/$workspaceId/settings'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdSettingsRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdRouteRoute
     }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
@@ -284,12 +653,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoApiNamesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/workspaces/$workspaceId/projects': {
+      id: '/workspaces/$workspaceId/projects'
+      path: '/projects'
+      fullPath: '/workspaces/$workspaceId/projects'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsRouteRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/': {
+      id: '/workspaces/$workspaceId/projects/'
+      path: '/'
+      fullPath: '/workspaces/$workspaceId/projects/'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsIndexRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
     '/demo/start/ssr/': {
       id: '/demo/start/ssr/'
       path: '/demo/start/ssr'
       fullPath: '/demo/start/ssr'
       preLoaderRoute: typeof DemoStartSsrIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/workspaces/$workspaceId/projects/create': {
+      id: '/workspaces/$workspaceId/projects/create'
+      path: '/create'
+      fullPath: '/workspaces/$workspaceId/projects/create'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsCreateRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
     }
     '/demo/start/ssr/spa-mode': {
       id: '/demo/start/ssr/spa-mode'
@@ -312,14 +702,188 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoStartSsrDataOnlyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/workspaces/$workspaceId/projects/$projectId/': {
+      id: '/workspaces/$workspaceId/projects/$projectId/'
+      path: '/$projectId'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdIndexRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/onboarding': {
+      id: '/workspaces/$workspaceId/projects/$projectId/onboarding'
+      path: '/$projectId/onboarding'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/onboarding'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdOnboardingRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/dashabord': {
+      id: '/workspaces/$workspaceId/projects/$projectId/dashabord'
+      path: '/$projectId/dashabord'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/dashabord'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdDashabordRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/settings/': {
+      id: '/workspaces/$workspaceId/projects/$projectId/settings/'
+      path: '/$projectId/settings'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/settings'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk': {
+      id: '/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk'
+      path: '/$projectId/walkthrough/sdk'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/walkthrough/sdk'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/walkthrough/portal': {
+      id: '/workspaces/$workspaceId/projects/$projectId/walkthrough/portal'
+      path: '/$projectId/walkthrough/portal'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/walkthrough/portal'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/settings/teams': {
+      id: '/workspaces/$workspaceId/projects/$projectId/settings/teams'
+      path: '/$projectId/settings/teams'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/settings/teams'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/settings/project-source': {
+      id: '/workspaces/$workspaceId/projects/$projectId/settings/project-source'
+      path: '/$projectId/settings/project-source'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/settings/project-source'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/settings/git-connection': {
+      id: '/workspaces/$workspaceId/projects/$projectId/settings/git-connection'
+      path: '/$projectId/settings/git-connection'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/settings/git-connection'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/settings/general': {
+      id: '/workspaces/$workspaceId/projects/$projectId/settings/general'
+      path: '/$projectId/settings/general'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/settings/general'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/api-studio/spec': {
+      id: '/workspaces/$workspaceId/projects/$projectId/api-studio/spec'
+      path: '/$projectId/api-studio/spec'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/api-studio/spec'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/api-studio/sdk': {
+      id: '/workspaces/$workspaceId/projects/$projectId/api-studio/sdk'
+      path: '/$projectId/api-studio/sdk'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/api-studio/sdk'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
+    '/workspaces/$workspaceId/projects/$projectId/api-studio/portal': {
+      id: '/workspaces/$workspaceId/projects/$projectId/api-studio/portal'
+      path: '/$projectId/api-studio/portal'
+      fullPath: '/workspaces/$workspaceId/projects/$projectId/api-studio/portal'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRouteImport
+      parentRoute: typeof WorkspacesWorkspaceIdProjectsRouteRoute
+    }
   }
 }
 
+interface WorkspacesWorkspaceIdProjectsRouteRouteChildren {
+  WorkspacesWorkspaceIdProjectsCreateRoute: typeof WorkspacesWorkspaceIdProjectsCreateRoute
+  WorkspacesWorkspaceIdProjectsIndexRoute: typeof WorkspacesWorkspaceIdProjectsIndexRoute
+  WorkspacesWorkspaceIdProjectsProjectIdDashabordRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdDashabordRoute
+  WorkspacesWorkspaceIdProjectsProjectIdOnboardingRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdOnboardingRoute
+  WorkspacesWorkspaceIdProjectsProjectIdIndexRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdIndexRoute
+  WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRoute
+  WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRoute
+  WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRoute
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRoute
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRoute
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRoute
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRoute
+  WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRoute
+  WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRoute
+  WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRoute: typeof WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRoute
+}
+
+const WorkspacesWorkspaceIdProjectsRouteRouteChildren: WorkspacesWorkspaceIdProjectsRouteRouteChildren =
+  {
+    WorkspacesWorkspaceIdProjectsCreateRoute:
+      WorkspacesWorkspaceIdProjectsCreateRoute,
+    WorkspacesWorkspaceIdProjectsIndexRoute:
+      WorkspacesWorkspaceIdProjectsIndexRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdDashabordRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdDashabordRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdOnboardingRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdOnboardingRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdIndexRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdIndexRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdApiStudioPortalRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdApiStudioSdkRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdApiStudioSpecRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdSettingsGeneralRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdSettingsGitConnectionRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdSettingsProjectSourceRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdSettingsTeamsRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdWalkthroughPortalRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdWalkthroughSdkRoute,
+    WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRoute:
+      WorkspacesWorkspaceIdProjectsProjectIdSettingsIndexRoute,
+  }
+
+const WorkspacesWorkspaceIdProjectsRouteRouteWithChildren =
+  WorkspacesWorkspaceIdProjectsRouteRoute._addFileChildren(
+    WorkspacesWorkspaceIdProjectsRouteRouteChildren,
+  )
+
+interface WorkspacesWorkspaceIdRouteRouteChildren {
+  WorkspacesWorkspaceIdProjectsRouteRoute: typeof WorkspacesWorkspaceIdProjectsRouteRouteWithChildren
+  WorkspacesWorkspaceIdSettingsRoute: typeof WorkspacesWorkspaceIdSettingsRoute
+  WorkspacesWorkspaceIdTeamsRoute: typeof WorkspacesWorkspaceIdTeamsRoute
+  WorkspacesWorkspaceIdIndexRoute: typeof WorkspacesWorkspaceIdIndexRoute
+}
+
+const WorkspacesWorkspaceIdRouteRouteChildren: WorkspacesWorkspaceIdRouteRouteChildren =
+  {
+    WorkspacesWorkspaceIdProjectsRouteRoute:
+      WorkspacesWorkspaceIdProjectsRouteRouteWithChildren,
+    WorkspacesWorkspaceIdSettingsRoute: WorkspacesWorkspaceIdSettingsRoute,
+    WorkspacesWorkspaceIdTeamsRoute: WorkspacesWorkspaceIdTeamsRoute,
+    WorkspacesWorkspaceIdIndexRoute: WorkspacesWorkspaceIdIndexRoute,
+  }
+
+const WorkspacesWorkspaceIdRouteRouteWithChildren =
+  WorkspacesWorkspaceIdRouteRoute._addFileChildren(
+    WorkspacesWorkspaceIdRouteRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  WorkspacesWorkspaceIdRouteRoute: WorkspacesWorkspaceIdRouteRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
   DemoPrismaRoute: DemoPrismaRoute,
   DemoStorybookRoute: DemoStorybookRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  WorkspacesCreateRoute: WorkspacesCreateRoute,
+  WorkspacesIndexRoute: WorkspacesIndexRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoApiTqTodosRoute: DemoApiTqTodosRoute,
   DemoFormAddressRoute: DemoFormAddressRoute,
