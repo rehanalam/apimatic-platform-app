@@ -90,7 +90,29 @@ export const Route = createFileRoute('/login')({
 })
 ```
 
-### 3. **Styling System (Tailwind v4)**
+### 3. **Authentication Flow (Current - Mock)**
+
+**Login:**
+```
+User fills form → LoginPage component → login() from @apimatic/api/auth
+  → Mock validation (zod) → Simulate 1s delay → Return mock user data
+  → navigate({ to: result.redirectTo }) → Redirect to /dashboard
+```
+
+**SignUp:**
+```
+User fills form → SignUpPage component → signUp() from @apimatic/api/auth
+  → Mock validation → Create mock user/workspace/project
+  → navigate({ to: result.redirectTo }) → Redirect to /onboarding
+```
+
+**Current Implementation:**
+- ✅ Client-side mock functions in `packages/api/src/client/auth.ts`
+- ❌ No real backend/database connection yet
+- ❌ No session persistence (refresh = logged out)
+- 🔜 Replace mocks with real API calls when backend is ready
+
+### 4. **Styling System (Tailwind v4)**
 
 **Design Tokens:**
 ```css
@@ -117,7 +139,7 @@ export const Route = createFileRoute('/login')({
 - No `tailwind.config.js` needed!
 - Automatic dark mode via `@media (prefers-color-scheme: dark)`
 
-### 4. **Component Import Flow**
+### 5. **Component Import Flow**
 
 ```
 auth-routes/src/login.tsx
@@ -127,6 +149,7 @@ ui/src/components/ui/ (Button, Input, Card, etc.)
 @apimatic/api/auth (login function)
   ↓ imports
 zod (validation)
+```
 
 ## Key Patterns
 
@@ -197,3 +220,26 @@ http://localhost:5173
 /login     - Login form (mock auth)
 /signup    - Signup form (mock auth)
 ```
+
+## Next Steps
+
+1. **Setup Real Backend:**
+   - Deploy API server (Node.js/Express or similar)
+   - Connect Prisma to actual database
+   - Update `packages/api/src/client/auth.ts` to call real endpoints
+
+2. **Add Session Management:**
+   - Store auth token (localStorage/cookie)
+   - Add auth context provider
+   - Implement protected routes
+
+3. **Build Core Features:**
+   - Dashboard
+   - Project management
+   - API spec upload
+   - SDK configuration
+   - Code generation
+
+---
+
+**Last Updated:** December 2024

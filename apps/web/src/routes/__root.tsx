@@ -1,6 +1,12 @@
-import { createRootRoute } from '@tanstack/react-router'
-import { RootComponent } from '../app'
+import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import '../styles/globals.css'
 
 export const Route = createRootRoute({
-  component: RootComponent,
+  component: () => (
+    <>
+      <Outlet />
+      {import.meta.env.DEV && <TanStackRouterDevtools />}
+    </>
+  ),
 })

@@ -1,8 +1,7 @@
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Button, Input, Label, Card, CardHeader, CardTitle, CardContent } from '@apimatic/ui'
-import { login } from '@apimatic/api'
-// import { login } from '@apimatic/api'
+import { login } from '@apimatic/api/client/auth'
 
 // Export component for lazy loading
 export default function LoginPage() {
