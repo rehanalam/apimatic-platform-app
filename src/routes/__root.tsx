@@ -5,12 +5,11 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+import TanStackQueryDevtools from '../client/lib/devtools'
 import '../styles.css'
 import type { ErrorComponentProps } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
-import { Button } from '@/client/components/storybook'
-import { Heading, Text } from '@/client/components/ui'
+import { Button, Heading, Text } from '@/client/components/ui'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -50,9 +49,7 @@ function RootError({ error, reset }: ErrorComponentProps) {
         )}
 
         <div className="flex gap-3">
-          <Button onClick={() => reset()} variant="danger">
-            Try Again
-          </Button>
+          <Button onClick={() => reset()}>Try Again</Button>
           <Link
             to="/"
             className="px-4 py-2 border border-red-600 text-red-600 rounded"
