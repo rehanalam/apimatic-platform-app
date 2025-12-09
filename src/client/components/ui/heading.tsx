@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
+import { cn } from '@/client/lib/utils'
 
 const headingVariants = cva('font-semibold tracking-tight', {
   variants: {

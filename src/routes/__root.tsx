@@ -9,8 +9,8 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import '../styles.css'
 import type { ErrorComponentProps } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
-import { Button } from '@/components/storybook'
-import { Heading, Text } from '@/components/ui'
+import { Button } from '@/client/components/storybook'
+import { Heading, Text } from '@/client/components/ui'
 
 interface MyRouterContext {
   queryClient: QueryClient
