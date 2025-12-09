@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
-import { devtools } from '@tanstack/devtools-vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import viteReact from '@vitejs/plugin-react'
-import viteTsConfigPaths from 'vite-tsconfig-paths'
-import tailwindcss from '@tailwindcss/vite'
-import { cloudflare } from '@cloudflare/vite-plugin'
+import { defineConfig } from 'vite';
+import { devtools } from '@tanstack/devtools-vite';
+import { tanstackStart } from '@tanstack/react-start/plugin/vite';
+import viteReact from '@vitejs/plugin-react';
+import viteTsConfigPaths from 'vite-tsconfig-paths';
+import tailwindcss from '@tailwindcss/vite';
+import { cloudflare } from '@cloudflare/vite-plugin';
 
 const config = defineConfig(({ mode }) => ({
   plugins: [
@@ -35,8 +35,10 @@ const config = defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       '.prisma/client': './src/generated/prisma',
+      '@client': './src/client',
+      '@server': './src/server',
     },
   },
-}))
+}));
 
-export default config
+export default config;
