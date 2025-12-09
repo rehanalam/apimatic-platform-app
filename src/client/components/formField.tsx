@@ -1,5 +1,7 @@
-import { Input, type InputProps } from '@/client/components/ui/input'
-import { Textarea, type TextareaProps } from '@/client/components/ui/textarea'
+import type { InputProps } from '@/client/components/ui/input'
+import type { TextareaProps } from '@/client/components/ui/textarea'
+import { Input } from '@/client/components/ui/input'
+import { Textarea } from '@/client/components/ui/textarea'
 import { Label } from '@/client/components/ui/label'
 import {
   Select,
@@ -9,9 +11,9 @@ import {
   SelectValue,
 } from '@/client/components/ui/select'
 import { Checkbox } from '@/client/components/ui/checkbox'
+import { Text } from '@/client/components/ui/text'
 import { cn } from '@/client/lib/utils'
 
-// Base field props
 interface BaseFieldProps {
   label?: string
   description?: string
@@ -19,35 +21,41 @@ interface BaseFieldProps {
   required?: boolean
 }
 
-// Text field props extending InputProps
-export interface TextFieldProps extends BaseFieldProps, Omit<InputProps, 'value' | 'onChange' | 'onBlur' | 'name' | 'id'> {
+export interface TextFieldProps
+  extends
+    BaseFieldProps,
+    Omit<InputProps, 'value' | 'onChange' | 'onBlur' | 'name' | 'id'> {
   type?: 'text' | 'email' | 'password' | 'url' | 'tel'
 }
 
-// Number field props extending InputProps
-export interface NumberFieldProps extends BaseFieldProps, Omit<InputProps, 'value' | 'onChange' | 'onBlur' | 'name' | 'id' | 'type'> {
+export interface NumberFieldProps
+  extends
+    BaseFieldProps,
+    Omit<InputProps, 'value' | 'onChange' | 'onBlur' | 'name' | 'id' | 'type'> {
   min?: number
   max?: number
   step?: number
 }
 
-// TextArea field props extending TextareaProps
-export interface TextAreaFieldProps extends BaseFieldProps, Omit<TextareaProps, 'value' | 'onChange' | 'onBlur' | 'name' | 'id'> {
+export interface TextAreaFieldProps
+  extends
+    BaseFieldProps,
+    Omit<TextareaProps, 'value' | 'onChange' | 'onBlur' | 'name' | 'id'> {
   rows?: number
 }
 
-// Select field props
 export interface SelectFieldProps extends BaseFieldProps {
   options: Array<{ value: string; label: string }>
   placeholder?: string
 }
 
-// Checkbox field props
-export interface CheckboxFieldProps extends Omit<BaseFieldProps, 'placeholder'> {
+export interface CheckboxFieldProps extends Omit<
+  BaseFieldProps,
+  'placeholder'
+> {
   label: string
 }
 
-// Field components
 export const FormFieldComponents = {
   TextField: (field: any, props: TextFieldProps) => (
     <div className={cn('space-y-2', props.className)}>
@@ -75,12 +83,14 @@ export const FormFieldComponents = {
         pattern={props.pattern}
       />
       {props.description && (
-        <p className="text-sm text-muted-foreground">{props.description}</p>
+        <Text size="sm" variant="secondary">
+          {props.description}
+        </Text>
       )}
       {field.state.meta.errors.length > 0 && (
-        <p className="text-sm font-medium text-destructive">
+        <Text size="sm" weight="medium" variant="danger">
           {field.state.meta.errors.join(', ')}
-        </p>
+        </Text>
       )}
     </div>
   ),
@@ -97,13 +107,15 @@ export const FormFieldComponents = {
         id={field.name as string}
         name={field.name as string}
         type="number"
-        value={(field.state.value as number) ?? ''}
+        value={field.state.value as number}
         placeholder={props.placeholder}
         min={props.min}
         max={props.max}
         step={props.step}
         onChange={(e) =>
-          field.handleChange(e.target.value ? Number(e.target.value) : undefined)
+          field.handleChange(
+            e.target.value ? Number(e.target.value) : undefined,
+          )
         }
         onBlur={() => field.handleBlur()}
         required={props.required}
@@ -112,12 +124,14 @@ export const FormFieldComponents = {
         autoFocus={props.autoFocus}
       />
       {props.description && (
-        <p className="text-sm text-muted-foreground">{props.description}</p>
+        <Text size="sm" variant="secondary">
+          {props.description}
+        </Text>
       )}
       {field.state.meta.errors.length > 0 && (
-        <p className="text-sm font-medium text-destructive">
+        <Text size="sm" weight="medium" variant="danger">
           {field.state.meta.errors.join(', ')}
-        </p>
+        </Text>
       )}
     </div>
   ),
@@ -146,12 +160,14 @@ export const FormFieldComponents = {
         minLength={props.minLength}
       />
       {props.description && (
-        <p className="text-sm text-muted-foreground">{props.description}</p>
+        <Text size="sm" variant="secondary">
+          {props.description}
+        </Text>
       )}
       {field.state.meta.errors.length > 0 && (
-        <p className="text-sm font-medium text-destructive">
+        <Text size="sm" weight="medium" variant="danger">
           {field.state.meta.errors.join(', ')}
-        </p>
+        </Text>
       )}
     </div>
   ),
@@ -180,12 +196,14 @@ export const FormFieldComponents = {
         </SelectContent>
       </Select>
       {props.description && (
-        <p className="text-sm text-muted-foreground">{props.description}</p>
+        <Text size="sm" variant="secondary">
+          {props.description}
+        </Text>
       )}
       {field.state.meta.errors.length > 0 && (
-        <p className="text-sm font-medium text-destructive">
+        <Text size="sm" weight="medium" variant="danger">
           {field.state.meta.errors.join(', ')}
-        </p>
+        </Text>
       )}
     </div>
   ),

@@ -10,11 +10,8 @@ import type {
 import { Button } from '@/client/components/ui/button'
 import { FormFieldComponents } from '@/client/components/formField'
 
-// Re-export field components for backward compatibility
 export const fieldComponents = FormFieldComponents
 
-// Form configuration interface
-// Note: Validators accept Zod schemas directly (Zod v4+ supports Standard Schema spec)
 export interface AppFormConfig<TFormData extends Record<string, unknown>> {
   defaultValues: TFormData
   onSubmit: (values: TFormData) => void | Promise<void>
@@ -25,7 +22,6 @@ export interface AppFormConfig<TFormData extends Record<string, unknown>> {
   }
 }
 
-// Create strongly typed form hook
 export function createAppForm<TFormData extends Record<string, unknown>>(
   config: AppFormConfig<TFormData>,
 ) {
@@ -39,8 +35,7 @@ export function createAppForm<TFormData extends Record<string, unknown>>(
     validators: config.validators as any,
   })
 
-  // Create AppField component bound to this form
-  const AppField = <TName extends keyof TFormData>({
+  const FormField = <TName extends keyof TFormData>({
     name,
     children,
   }: {
@@ -51,20 +46,24 @@ export function createAppForm<TFormData extends Record<string, unknown>>(
       <form.Field
         name={name as string}
         children={(field: any) => {
-          // Attach field components to the field
-          const fieldWithComponents = Object.assign(field, fieldComponents)
+          // Attach field components to the field with proper binding
+          const fieldWithComponents = Object.assign({}, field, {
+            TextField: (props: any) => fieldComponents.TextField(field, props),
+            NumberField: (props: any) => fieldComponents.NumberField(field, props),
+            TextAreaField: (props: any) => fieldComponents.TextAreaField(field, props),
+            SelectField: (props: any) => fieldComponents.SelectField(field, props),
+            CheckboxField: (props: any) => fieldComponents.CheckboxField(field, props),
+          })
           return children(fieldWithComponents)
         }}
       />
     )
   }
 
-  // Create AppForm component for form-level components
-  const AppForm = ({ children }: { children: React.ReactNode }) => {
+  const Form = ({ children }: { children: React.ReactNode }) => {
     return <>{children}</>
   }
 
-  // Submit button component
   const SubmitButton = ({
     children = 'Submit',
     className,
@@ -93,7 +92,6 @@ export function createAppForm<TFormData extends Record<string, unknown>>(
     )
   }
 
-  // Reset button component
   const ResetButton = ({
     children = 'Reset',
     className,
@@ -114,14 +112,13 @@ export function createAppForm<TFormData extends Record<string, unknown>>(
 
   return {
     ...form,
-    AppField,
-    AppForm,
+    FormField,
+    Form,
     SubmitButton,
     ResetButton,
   }
 }
 
-// Export types for external use (re-exported from formField)
 export type {
   TextFieldProps,
   NumberFieldProps,
