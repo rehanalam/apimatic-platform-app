@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/client/components/ui/card';
 
-interface LoginFormData {
+export interface LoginFormData {
   email: string;
   password: string;
 }
