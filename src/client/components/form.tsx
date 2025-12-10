@@ -22,7 +22,7 @@ export interface AppFormConfig<TFormData> {
   };
 }
 
-export function createAppForm<TFormData>(config: AppFormConfig<TFormData>) {
+export function useAppForm<TFormData>(config: AppFormConfig<TFormData>) {
   const form = useForm({
     defaultValues: config.defaultValues,
     onSubmit: async ({ value }) => {
@@ -71,26 +71,23 @@ export function createAppForm<TFormData>(config: AppFormConfig<TFormData>) {
     className,
     ...props
   }: React.ComponentProps<typeof Button>) => {
-    const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [canSubmit, setCanSubmit] = React.useState(true);
-
-    React.useEffect(() => {
-      const unsubscribe = form.store.subscribe(() => {
-        setIsSubmitting(form.state.isSubmitting);
-        setCanSubmit(form.state.canSubmit);
-      });
-      return unsubscribe;
-    }, []);
-
     return (
-      <Button
-        type="submit"
-        disabled={!canSubmit || isSubmitting}
-        className={className}
-        {...props}
-      >
-        {isSubmitting ? 'Submitting...' : children}
-      </Button>
+      <form.Subscribe
+        selector={(state) => ({
+          canSubmit: state.canSubmit,
+          isSubmitting: state.isSubmitting,
+        })}
+        children={(state) => (
+          <Button
+            type="submit"
+            disabled={!state.canSubmit || state.isSubmitting}
+            className={className}
+            {...props}
+          >
+            {state.isSubmitting ? 'Submitting...' : children}
+          </Button>
+        )}
+      />
     );
   };
 
@@ -120,6 +117,9 @@ export function createAppForm<TFormData>(config: AppFormConfig<TFormData>) {
     ResetButton,
   };
 }
+
+// Backwards compatibility alias
+export const createAppForm = useAppForm;
 
 export type {
   TextFieldProps,

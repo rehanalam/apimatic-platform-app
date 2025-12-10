@@ -12,7 +12,7 @@
     "check": "prettier --write . && eslint --fix",
     "deploy": "wrangler deploy",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "c": "storybook build",
     "post-cta-init": "npx create-db@latest",
     "db:generate": "dotenv -e .env.local -- prisma generate",
     "db:push": "dotenv -e .env.local -- prisma db push",

@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/client/components/ui/card';
+import { useLogin } from '@/client/hooks/useAuth';
 
 export interface LoginFormData {
   email: string;
@@ -20,10 +21,13 @@ const initialFormValues: LoginFormData = {
 };
 
 export function LoginForm() {
+  const { mutateAsync: login, isPending, error } = useLogin();
+
   const form = createAppForm({
     defaultValues: initialFormValues,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log('submitted values' + values);
+      await login(values);
     },
   });
 
